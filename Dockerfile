@@ -2,13 +2,16 @@ FROM ubuntu:14.04
 
 MAINTAINER Decheng Zhang <killercentury@gmail.com>
 
+USER root
+
 # Let's start with some basic stuff.
 RUN apt-get update -qq && apt-get install -qqy \
     apt-transport-https \
     ca-certificates \
     curl \
     lxc \
-    iptables
+    iptables \
+    mercurial
 
 # Install Docker from Docker Inc. repositories.
 RUN curl -sSL https://get.docker.com/ | sh
@@ -31,6 +34,11 @@ RUN apt-get update && apt-get install -y zip supervisor jenkins && rm -rf /var/l
 RUN usermod -a -G docker jenkins
 ENV JENKINS_HOME /var/lib/jenkins
 VOLUME /var/lib/jenkins
+
+# ENV JENKINS_UC https://updates.jenkins-ci.org
+# COPY plugins.sh /usr/local/bin/plugins.sh
+# COPY plugins.txt /usr/share/jenkins/plugins.txt
+# RUN /usr/local/bin/plugins.sh /usr/share/jenkins/plugins.txt
 
 # Install Docker Compose
 RUN curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose

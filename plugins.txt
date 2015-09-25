@@ -1,0 +1,4 @@
+envinject:1.92.1
+git:2.4.0
+golang:1.1
+docker-build-publish:1.0.1
